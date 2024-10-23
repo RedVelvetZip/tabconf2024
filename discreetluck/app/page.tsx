@@ -1,4 +1,5 @@
 import DisplayBlocks from "@/components/bitcoin/display-blocks";
+import NostrInterface from "@/components/nostr/nostr-interface";
 import MarketQuestions from "@/components/polymarket/market-questions";
 import PresidentialMarket from "@/components/polymarket/presidential-market";
 import PresidentialPrices from "@/components/polymarket/presidential-prices";
@@ -9,8 +10,9 @@ export default function Home() {
       <main className="flex flex-col gap-8 items-center justify-center w-full">
         <div className="w-full">
           {/* <MarketQuestions /> */}
-          {/* <PresidentialMarket /> */}
+          <PresidentialMarket />
           <PresidentialPrices />
+          <NostrInterface />
         </div>
         <div className="w-full">
           Regtest info:

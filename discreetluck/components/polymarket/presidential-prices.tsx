@@ -71,6 +71,7 @@ const PresidentialPrices: React.FC = () => {
         <p>{error}</p>
       ) : (
         <div>
+          <br />
           <h2>Democratic Party</h2>
           {democraticPrices ? (
             <p>
@@ -80,7 +81,7 @@ const PresidentialPrices: React.FC = () => {
           ) : (
             <p>No price data for Democratic Party</p>
           )}
-
+          <br />
           <h2>Republican Party</h2>
           {republicanPrices ? (
             <p>
