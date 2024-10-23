@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@atomicfinance/bitcoin-dlc-provider": "^3.5.0",
+    "@atomicfinance/bitcoin-js-wallet-provider": "^3.5.0",
+    "@atomicfinance/client": "^3.5.0",
     "@polymarket/clob-client": "^4.11.0",
     "axios": "^1.7.7",
     "cors": "^2.8.5",

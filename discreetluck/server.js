@@ -14,6 +14,26 @@ const RPC_PASSWORD = process.env.RPC_PASSWORD;
 const RPC_PORT = process.env.RPC_PORT;
 const RPC_HOST = process.env.RPC_HOST || "127.0.0.1";
 
+// AtomicFinance DLC stuff
+const Client = require("@atomicfinance/client").default;
+const BitcoinDlcProvider =
+  require("@atomicfinance/bitcoin-dlc-provider").default;
+const bitcoin = new Client();
+const BitcoinNetworks = require("bitcoin-networks").default;
+const network = "regtest"; //BitcoinNetworks.bitcoin_testnet;
+bitcoin.addProvider(new BitcoinDlcProvider(network));
+//might need later. also from AtomicFinance
+// const BitcoinJsWalletProvider =
+//   require("@atomicfinance/bitcoin-js-wallet-provider").default;
+// bitcoin.addProvider(
+//   new BitcoinJsWalletProvider({
+//     network,
+//     mnemonic: "your-mnemonic-here", // Replace with your mnemonic
+//     baseDerivationPath: `m/84'/${network.coinType}'/0'`,
+//     addressType: "bech32",
+//   })
+// );
+
 // Helper function to read wallets from wallets.json
 const getWallets = () => {
   const walletData = fs.readFileSync("./wallets.json", "utf-8");
@@ -172,6 +192,33 @@ app.get("/wallets", (req, res) => {
   } catch (error) {
     console.error("Error fetching wallets:", error);
     res.status(500).json({ error: "Failed to fetch wallets" });
+  }
+});
+
+// Example API endpoint to create DLC Offer
+app.post("/create-dlc-offer", async (req, res) => {
+  const {
+    contractInfo,
+    collateralSatoshis,
+    feeRatePerVb,
+    cetLocktime,
+    refundLocktime,
+  } = req.body;
+
+  try {
+    // Create DLC offer
+    const dlcOffer = await bitcoin.dlc.createDlcOffer(
+      contractInfo, // Contract information
+      BigInt(collateralSatoshis), // Collateral amount in satoshis
+      BigInt(feeRatePerVb), // Fee rate per virtual byte
+      cetLocktime, // CET locktime
+      refundLocktime // Refund locktime
+    );
+
+    res.json({ dlcOffer });
+  } catch (error) {
+    console.error("Error creating DLC offer:", error);
+    res.status(500).json({ error: "Failed to create DLC offer" });
   }
 });
 

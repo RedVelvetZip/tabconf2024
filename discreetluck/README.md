@@ -2,13 +2,22 @@
 
 TODO
 
-1. connect to Nostr
-   send data
-   read data
-   sent CET
-   complete CET
-2. Pull data from Polymarket API to console
-3. Test writing txs from the frontend (simple sends)
+tasks:
+
+-read basic tx from bitcoin node ✅
+-write basic tx to bitcoin node ✅
+-read from polymarket API ✅
+-write to polymarket API ✖️
+-read basic post from nostr ✅
+-write basic post to nostr ✅
+-create DLC OfferCreate ✖️
+-use polymarket as oracle for DLC ✖️
+-write DLC OfferCreate to nostr ✖️
+-read DLC OfferCreate from nostr ✖️
+-manually accept DLC OfferAccept ✖️
+-create CETs for accepted DLC ✖️
+-programmatically send DLC OfferAccept ✖️
+-programmatically hedge DLC OfferAccept with polymarket API post ✖️
 
 ## Boot up
 

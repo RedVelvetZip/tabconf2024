@@ -1,3 +1,4 @@
+import CreateDlcOffer from "@/components/bitcoin/create-dlc-offer";
 import DisplayBlocks from "@/components/bitcoin/display-blocks";
 import SendTransaction from "@/components/bitcoin/send-tx";
 import NostrInterface from "@/components/nostr/nostr-interface";
@@ -19,6 +20,9 @@ export default function Home() {
           Regtest info:
           <DisplayBlocks />
           <SendTransaction />
+        </div>
+        <div className="w-full">
+          <CreateDlcOffer />
         </div>
       </main>
     </div>
