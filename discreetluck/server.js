@@ -2,21 +2,27 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const axios = require("axios");
+const fs = require("fs");
 require("dotenv").config();
 
 // Enable CORS for all routes
 app.use(cors());
+app.use(express.json());
 
 const RPC_USER = process.env.RPC_USER;
 const RPC_PASSWORD = process.env.RPC_PASSWORD;
 const RPC_PORT = process.env.RPC_PORT;
 const RPC_HOST = process.env.RPC_HOST || "127.0.0.1";
 
-app.use(express.json());
+// Helper function to read wallets from wallets.json
+const getWallets = () => {
+  const walletData = fs.readFileSync("./wallets.json", "utf-8");
+
+  return JSON.parse(walletData).wallets;
+};
 
 const getRPCData = async (method, params = []) => {
   const url = `http://${RPC_USER}:${RPC_PASSWORD}@${RPC_HOST}:${RPC_PORT}`;
-  console.log(`RPC URL: ${url}, Method: ${method}, Params: ${params}`);
   try {
     const response = await axios.post(
       url,
@@ -119,12 +125,24 @@ app.get("/blocks/:blockHash/transactions", async (req, res) => {
   }
 });
 
+// API route to get the balance of a specific address
 app.get("/balance/:address", async (req, res) => {
   const address = req.params.address;
 
   try {
-    // Get the balance of the sender's address using bitcoin-cli
-    const balance = await getRPCData("getbalance", [address]);
+    // Get the list of unspent outputs for the specific address
+    const unspentOutputs = await getRPCData("listunspent", [
+      0,
+      9999999,
+      [address],
+    ]);
+
+    // Calculate the total balance by summing up the amounts from unspent outputs
+    const balance = unspentOutputs.reduce(
+      (total, utxo) => total + utxo.amount,
+      0
+    );
+
     res.json({ balance });
   } catch (error) {
     console.error(`Error fetching balance for address ${address}:`, error);
@@ -132,8 +150,9 @@ app.get("/balance/:address", async (req, res) => {
   }
 });
 
+// API route to send Bitcoin transaction
 app.post("/send", async (req, res) => {
-  const { sender, receiver, amount } = req.body;
+  const { receiver, amount } = req.body;
 
   try {
     // Execute the sendtoaddress command to send Bitcoin
@@ -142,6 +161,17 @@ app.post("/send", async (req, res) => {
   } catch (error) {
     console.error("Error sending transaction:", error);
     res.status(500).json({ error: "Failed to send transaction" });
+  }
+});
+
+// API route to get wallets
+app.get("/wallets", (req, res) => {
+  try {
+    const wallets = getWallets();
+    res.json(wallets);
+  } catch (error) {
+    console.error("Error fetching wallets:", error);
+    res.status(500).json({ error: "Failed to fetch wallets" });
   }
 });
 

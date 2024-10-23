@@ -130,3 +130,4 @@ dist
 .pnp.*
 accounts.json
 discreetluck/wallet.json
+discreetluck/wallets.json
