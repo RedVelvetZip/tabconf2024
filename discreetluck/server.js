@@ -119,6 +119,32 @@ app.get("/blocks/:blockHash/transactions", async (req, res) => {
   }
 });
 
+app.get("/balance/:address", async (req, res) => {
+  const address = req.params.address;
+
+  try {
+    // Get the balance of the sender's address using bitcoin-cli
+    const balance = await getRPCData("getbalance", [address]);
+    res.json({ balance });
+  } catch (error) {
+    console.error(`Error fetching balance for address ${address}:`, error);
+    res.status(500).json({ error: "Failed to fetch balance" });
+  }
+});
+
+app.post("/send", async (req, res) => {
+  const { sender, receiver, amount } = req.body;
+
+  try {
+    // Execute the sendtoaddress command to send Bitcoin
+    const txid = await getRPCData("sendtoaddress", [receiver, amount]);
+    res.json({ txid });
+  } catch (error) {
+    console.error("Error sending transaction:", error);
+    res.status(500).json({ error: "Failed to send transaction" });
+  }
+});
+
 const port = 4001;
 
 app.listen(port, () => {

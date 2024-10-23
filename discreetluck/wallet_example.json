@@ -1,0 +1,24 @@
+{
+  "wallets": [
+    {
+      "address": "bcrt1qexample1",
+      "label": "Alice",
+      "type": "sender"
+    },
+    {
+      "address": "bcrt1qexample2",
+      "label": "Bob",
+      "type": "sender"
+    },
+    {
+      "address": "bcrt1qreceiver1",
+      "label": "Charlie",
+      "type": "receiver"
+    },
+    {
+      "address": "bcrt1qreceiver2",
+      "label": "Dave",
+      "type": "receiver"
+    }
+  ]
+}
