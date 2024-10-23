@@ -1,0 +1,33 @@
+{
+  "name": "superrain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www",
+    "production": "pm2-runtime start pm2prod.config.js",
+    "debug": "nodemon ./bin/www"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nostr-dev-kit/ndk": "^2.8.2",
+    "bech32": "^2.0.0",
+    "bufferutil": "^4.0.8",
+    "dotenv": "^16.4.5",
+    "follow-redirects": "^1.15.6",
+    "ksuid": "^3.0.0",
+    "loglevel": "^1.9.1",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.4.4",
+    "nostr-tools": "^2.7.0",
+    "throng": "^5.0.0",
+    "ws": "^8.17.1"
+  },
+  "devDependencies": {
+    "pm2": "^5.4.2",
+    "nodemon": "^3.1.4"
+  }
+}
