@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@polymarket/clob-client": "^4.11.0",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "ethers": "^5.7.2",
     "exnpm": "^1.0.2",
     "express": "^4.21.1",
     "install": "^0.13.0",
