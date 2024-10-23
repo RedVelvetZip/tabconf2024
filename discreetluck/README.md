@@ -1,20 +1,23 @@
 # Discreet Luck
 
+TODO
+
+1. connect to Nostr
+   send data
+   read data
+   sent CET
+   complete CET
+2. Pull data from Polymarket API to console
+3. Test writing txs from the frontend (simple sends)
+
 ## Boot up
 
-in this order:
+1. `bitcoind -regtest -txindex=1 -reindex` (root) start a regtest node
+2. `npm start` (superrain) start a local nostr relay
+3. `node server.js` (/discreetluck) start the server to communicate with the regtest node
+4. `npm run dev` (/discreetluck) start the frontend
 
-1. start a regtest node
-2. start the server to communicate with the regtest node
-3. start the frontend
-
-commands
-
-1. `bitcoind -regtest -txindex=1 -reindex` (root)
-2. `node server.js` (/discreetluck)
-3. `npm run dev` (/discreetluck)
-
-## Red's local notes
+## Red's notes
 
 make sure to run with -txindex=1 and -reindex or else the tx api call wont work for pulling full tx info
 
@@ -39,7 +42,3 @@ make sure to run with -txindex=1 and -reindex or else the tx api call wont work 
     progress 1 block to finalize txs
 
 `bitcoin-cli -regtest generatetoaddress 1 bcrt1qgjukxd3vjrz9qf0588mdj5j5w3fenyhl0g5y7j`
-
-## First run
-
-Create some blocks and txs on your regtest node
