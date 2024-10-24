@@ -1,3 +1,4 @@
+import DLCOfferCreate from "@/components/bitcoin/atomic_dlc";
 import CreateDlcOffer from "@/components/bitcoin/create-dlc-offer";
 import DisplayBlocks from "@/components/bitcoin/display-blocks";
 import SendTransaction from "@/components/bitcoin/send-tx";
@@ -11,6 +12,7 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <main className="flex flex-col gap-8 items-center justify-center w-full">
         <div className="w-full">
+          <DLCOfferCreate />
           <CreateDlcOffer />
         </div>
         <div className="w-full">
