@@ -11,6 +11,9 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <main className="flex flex-col gap-8 items-center justify-center w-full">
         <div className="w-full">
+          <CreateDlcOffer />
+        </div>
+        <div className="w-full">
           {/* <MarketQuestions /> */}
           {/* <PresidentialMarket /> */}
           <PresidentialPrices />
@@ -20,9 +23,6 @@ export default function Home() {
           Regtest info:
           <DisplayBlocks />
           <SendTransaction />
-        </div>
-        <div className="w-full">
-          <CreateDlcOffer />
         </div>
       </main>
     </div>

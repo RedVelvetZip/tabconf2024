@@ -4,6 +4,12 @@ const app = express();
 const axios = require("axios");
 const fs = require("fs");
 require("dotenv").config();
+const {
+  ContractInfoV0,
+  ContractDescriptorV0,
+  OracleInfoV0,
+} = require("path-to-node-dlc-messaging/ContractInfo");
+const Oracle = require("path-to-Oracle");
 
 // Enable CORS for all routes
 app.use(cors());
@@ -14,15 +20,17 @@ const RPC_PASSWORD = process.env.RPC_PASSWORD;
 const RPC_PORT = process.env.RPC_PORT;
 const RPC_HOST = process.env.RPC_HOST || "127.0.0.1";
 
+const oracle = new Oracle("ExampleOracle", 1);
+const oracleInfo = oracle.GetOracleInfo();
+
 // AtomicFinance DLC stuff
 const Client = require("@atomicfinance/client").default;
-const BitcoinDlcProvider =
-  require("@atomicfinance/bitcoin-dlc-provider").default;
-const bitcoin = new Client();
-const BitcoinNetworks = require("bitcoin-networks").default;
-const network = "regtest"; //BitcoinNetworks.bitcoin_testnet;
-bitcoin.addProvider(new BitcoinDlcProvider(network));
-//might need later. also from AtomicFinance
+// const BitcoinDlcProvider =
+//   require("@atomicfinance/bitcoin-dlc-provider").default;
+// const bitcoin = new Client();
+// const BitcoinNetworks = require("bitcoin-networks").default;
+// const network = "regtest"; //BitcoinNetworks.bitcoin_testnet;
+// bitcoin.addProvider(new BitcoinDlcProvider(network));
 // const BitcoinJsWalletProvider =
 //   require("@atomicfinance/bitcoin-js-wallet-provider").default;
 // bitcoin.addProvider(
@@ -195,24 +203,42 @@ app.get("/wallets", (req, res) => {
   }
 });
 
-// Example API endpoint to create DLC Offer
+// API route to create DLC offer
 app.post("/create-dlc-offer", async (req, res) => {
-  const {
-    contractInfo,
-    collateralSatoshis,
-    feeRatePerVb,
-    cetLocktime,
-    refundLocktime,
-  } = req.body;
-
   try {
-    // Create DLC offer
-    const dlcOffer = await bitcoin.dlc.createDlcOffer(
-      contractInfo, // Contract information
-      BigInt(collateralSatoshis), // Collateral amount in satoshis
-      BigInt(feeRatePerVb), // Fee rate per virtual byte
-      cetLocktime, // CET locktime
-      refundLocktime // Refund locktime
+    const { collateralSatoshis, feeRatePerVb, cetLocktime, refundLocktime } =
+      req.body;
+
+    // Create Contract Descriptor
+    const contractDescriptor = new ContractDescriptorV0();
+    contractDescriptor.outcomes = [
+      {
+        outcome: "WIN",
+        localPayout: BigInt(100000), // Example payout
+      },
+      {
+        outcome: "LOSE",
+        localPayout: BigInt(0),
+      },
+    ];
+
+    // Create Oracle Info
+    const oracleEvent = oracleInfo.rValues;
+    const oraclePubKey = oracleInfo.publicKey;
+    const oracleInfoV0 = new OracleInfoV0(oracleEvent, oraclePubKey);
+
+    // Create Contract Info
+    const contractInfo = new ContractInfoV0();
+    contractInfo.totalCollateral = BigInt(collateralSatoshis);
+    contractInfo.contractDescriptor = contractDescriptor;
+    contractInfo.oracleInfo = oracleInfoV0;
+
+    const dlcOffer = await client.dlc.createDlcOffer(
+      contractInfo,
+      BigInt(collateralSatoshis),
+      BigInt(feeRatePerVb),
+      cetLocktime,
+      refundLocktime
     );
 
     res.json({ dlcOffer });

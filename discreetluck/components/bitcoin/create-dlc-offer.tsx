@@ -1,12 +1,36 @@
 "use client";
 
 import { useState } from "react";
+import { ContractDescriptorV0 } from "@node-dlc/messaging";
+
+const contractDescriptor = new ContractDescriptorV0();
+contractDescriptor.outcomes = [
+  {
+    outcome: Buffer.from("RED_TEAM_WIN"),
+    localPayout: BigInt(8e5),
+  },
+  {
+    outcome: Buffer.from("BLUE_TEAM_WIN"),
+    localPayout: BigInt(2e5),
+  },
+  {
+    outcome: Buffer.from("DEFAULT_REFUND"),
+    localPayout: BigInt(5e5),
+  },
+];
+
+import { OracleInfoV0, OracleAnnouncementV0 } from "@node-dlc/messaging";
+
+const oracleInfo = new OracleInfoV0();
+oracleInfo.announcement = OracleAnnouncementV0.deserialize(
+  Buffer.from("insert_announcement_hex", "hex") //announcement hex link from docs is dead  https://oracle.suredbits.com/
+);
 
 const CreateDlcOffer = () => {
-  const [collateralSatoshis, setCollateralSatoshis] = useState("1000000"); // 1 million sats aka 0.01 BTC
-  const [feeRatePerVb, setFeeRatePerVb] = useState("10"); // 10 sats/vbyte
-  const [cetLocktime, setCetLocktime] = useState("1700000000"); // example
-  const [refundLocktime, setRefundLocktime] = useState("1700000500"); // example
+  const [collateralSatoshis, setCollateralSatoshis] = useState("1000000");
+  const [feeRatePerVb, setFeeRatePerVb] = useState("10");
+  const [cetLocktime, setCetLocktime] = useState("1700000000");
+  const [refundLocktime, setRefundLocktime] = useState("1700000500");
   const [offerResult, setOfferResult] = useState(null);
 
   const createOffer = async () => {
@@ -15,7 +39,6 @@ const CreateDlcOffer = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contractInfo: {}, // TODO
           collateralSatoshis,
           feeRatePerVb,
           cetLocktime,
