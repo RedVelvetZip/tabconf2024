@@ -21,10 +21,10 @@ contractDescriptor.outcomes = [
 
 import { OracleInfoV0, OracleAnnouncementV0 } from "@node-dlc/messaging";
 
-const oracleInfo = new OracleInfoV0();
-oracleInfo.announcement = OracleAnnouncementV0.deserialize(
-  Buffer.from("insert_announcement_hex", "hex") //announcement hex link from docs is dead  https://oracle.suredbits.com/
-);
+// const oracleInfo = new OracleInfoV0();
+// oracleInfo.announcement = OracleAnnouncementV0.deserialize(
+//   Buffer.from("insert_announcement_hex", "hex") //announcement hex link from docs is dead  https://oracle.suredbits.com/
+// );
 
 const CreateDlcOffer = () => {
   const [collateralSatoshis, setCollateralSatoshis] = useState("1000000");

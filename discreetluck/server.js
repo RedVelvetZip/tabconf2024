@@ -4,12 +4,12 @@ const app = express();
 const axios = require("axios");
 const fs = require("fs");
 require("dotenv").config();
-const {
-  ContractInfoV0,
-  ContractDescriptorV0,
-  OracleInfoV0,
-} = require("path-to-node-dlc-messaging/ContractInfo");
-const Oracle = require("path-to-Oracle");
+// const {
+//   ContractInfoV0,
+//   ContractDescriptorV0,
+//   OracleInfoV0,
+// } = require("@dlc-messaging/ContractInfo");
+// const Oracle = require("path-to-Oracle");
 
 // Enable CORS for all routes
 app.use(cors());
@@ -20,11 +20,11 @@ const RPC_PASSWORD = process.env.RPC_PASSWORD;
 const RPC_PORT = process.env.RPC_PORT;
 const RPC_HOST = process.env.RPC_HOST || "127.0.0.1";
 
-const oracle = new Oracle("ExampleOracle", 1);
-const oracleInfo = oracle.GetOracleInfo();
+// const oracle = new Oracle("ExampleOracle", 1);
+// const oracleInfo = oracle.GetOracleInfo();
 
 // AtomicFinance DLC stuff
-const Client = require("@atomicfinance/client").default;
+// const Client = require("@atomicfinance/client").default;
 // const BitcoinDlcProvider =
 //   require("@atomicfinance/bitcoin-dlc-provider").default;
 // const bitcoin = new Client();
