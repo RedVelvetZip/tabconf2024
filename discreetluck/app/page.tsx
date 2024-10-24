@@ -1,4 +1,5 @@
-import DLCOfferCreate from "@/components/bitcoin/atomic_dlc";
+// import DLCOfferCreate from "@/components/bitcoin/atomic_dlc";
+import DLCOfferCreate from "@/components/bitcoin/atomicv3";
 import CreateDlcOffer from "@/components/bitcoin/create-dlc-offer";
 import DisplayBlocks from "@/components/bitcoin/display-blocks";
 import SendTransaction from "@/components/bitcoin/send-tx";
