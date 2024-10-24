@@ -21,10 +21,29 @@ tasks:
 
 ## Boot up
 
-1. `bitcoind -regtest -txindex=1 -reindex` (root) start a regtest node
-2. `npm start` (superrain) start a local nostr relay
-3. `node server.js` (/discreetluck) start the server to communicate with the regtest node
-4. `npm run dev` (/discreetluck) start the frontend
+1. (root) start a regtest node
+   `bitcoind -regtest -txindex=1 -reindex`
+   1b. interact with bitcoin-cli. eg generate a block
+   `bitcoin-cli -regtest generatetoaddress 1 bcrt1qgjukxd3vjrz9qf0588mdj5j5w3fenyhl0g5y7j`
+
+2. (polygon) start a devnet polygon node
+   `cd polygon`
+   `npx hardhat node`
+   2b. (polygon) interface w node
+   `cd polygon`
+   `npx hardhat console --network localhost`
+
+3. (superrain) start a local nostr relay
+   `cd superrain`
+   `npm start`
+
+4. (discreetluck) start the server to communicate with the regtest node
+   `cd discreetluck`
+   `node server.js`
+
+5. (discreetluck) start the frontend
+   `cd discreetluck`
+   `npm run dev`
 
 ## Red's notes
 
