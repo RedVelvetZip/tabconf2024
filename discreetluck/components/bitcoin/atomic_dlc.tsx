@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { useEffect, useState } from "react";
 import * as cfd from "cfd-js-wasm";
@@ -20,9 +20,13 @@ const RPC_PASSWORD = process.env.RPC_PASSWORD;
 const RPC_PORT = process.env.RPC_PORT;
 const RPC_HOST = process.env.RPC_HOST || "127.0.0.1";
 
+interface CreateFundTransactionResponse {
+  hex: string;
+}
+
 const DLCOfferCreate = () => {
   const [dlcResult, setDlcResult] =
-    useState<cfddlc.CreateFundTransactionResponse | null>(null);
+    useState<CreateFundTransactionResponse | null>(null);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
