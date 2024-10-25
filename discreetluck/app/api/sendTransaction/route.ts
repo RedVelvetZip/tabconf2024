@@ -4,9 +4,8 @@ import path from "path";
 
 export async function POST() {
   try {
-    // Path to your Hardhat project folder
-    const hardhatPath = path.resolve(process.cwd(), "../hardhat");
-    const scriptPath = path.join(hardhatPath, "scripts/sendTransaction.js");
+    const hardhatPath = path.resolve(process.cwd(), "../../../polygon");
+    const scriptPath = path.join(hardhatPath, "scripts/sendFunds.js");
 
     return new Promise((resolve, reject) => {
       exec(

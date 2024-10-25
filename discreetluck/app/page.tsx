@@ -9,9 +9,15 @@ import PresidentialMarket from "@/components/polymarket/presidential-market";
 import PresidentialPrices from "@/components/polymarket/presidential-prices";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const [priceData, setPriceData] = useState(null);
+
+  const handleSendPrices = (data: any) => {
+    setPriceData(data);
+  };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <main className="flex flex-col gap-8 items-center justify-center w-full">
@@ -20,9 +26,9 @@ export default function Home() {
         </div>
         <div className="w-full">
           {/* <MarketQuestions /> */}
-          {/* <PresidentialMarket /> */}
-          <PresidentialPrices />
-          <NostrInterface />
+          <PresidentialMarket />
+          <PresidentialPrices onSendPrices={handleSendPrices} />
+          <NostrInterface priceData={priceData} />
         </div>
         <div className="w-full">
           Regtest info:

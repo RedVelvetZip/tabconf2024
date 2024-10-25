@@ -4,20 +4,21 @@ TODO
 
 tasks:
 
--read basic tx from bitcoin node ✅
--write basic tx to bitcoin node ✅
--read from polymarket API ✅
--write to polymarket API ✖️
--read basic post from nostr ✅
--write basic post to nostr ✅
--create DLC OfferCreate ✖️
--use polymarket as oracle for DLC ✖️
--write DLC OfferCreate to nostr ✖️
--read DLC OfferCreate from nostr ✖️
--manually accept DLC OfferAccept ✖️
--create CETs for accepted DLC ✖️
--programmatically send DLC OfferAccept ✖️
--programmatically hedge DLC OfferAccept with polymarket API post ✖️
+- read basic tx from bitcoin node ✅
+- write basic tx to bitcoin node ✅
+- read from polymarket API ✅
+- write to polymarket API ✖️
+- read basic post from nostr ✅
+- write basic post to nostr ✅
+- create DLC OfferCreate ✖️
+- use polymarket as oracle for DLC ✖️
+- write DLC OfferCreate to nostr ✖️
+- read DLC OfferCreate from nostr ✖️
+- manually accept DLC OfferAccept ✖️
+- create CETs for accepted DLC ✖️
+- programmatically send DLC OfferAccept ✖️
+- programmatically hedge DLC OfferAccept with polymarket API post ✖️
+- adjust Nostr custom tags to have a nullifier attribute to alert users if a DLC OfferCreate has already been filled. this will essentially filter out 'used' offers ✖️
 
 ## Boot up
 

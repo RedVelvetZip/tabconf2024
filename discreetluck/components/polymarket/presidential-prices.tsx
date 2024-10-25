@@ -2,15 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 
-// Hardcoded Token IDs
+// Hardcoded Token IDs. These come from the get markets and get market info API calls
 const DEMOCRATIC_TOKEN_ID =
   "11015470973684177829729219287262166995141465048508201953575582100565462316088";
 const REPUBLICAN_TOKEN_ID =
   "65444287174436666395099524416802980027579283433860283898747701594488689243696";
 
-// Mock API function to get the prices (this would call the actual API in practice)
 const fetchPrices = async (tokenId: string) => {
-  // Replace this with the actual API call using clobClient.getPrice
   const response = await fetch(
     `https://clob.polymarket.com/price?token_id=${tokenId}&side=buy`
   );
@@ -27,7 +25,9 @@ const fetchPrices = async (tokenId: string) => {
   };
 };
 
-const PresidentialPrices: React.FC = () => {
+const PresidentialPrices: React.FC<{ onSendPrices: any }> = ({
+  onSendPrices,
+}) => {
   const [democraticPrices, setDemocraticPrices] = useState<{
     buy: string;
     sell: string;
@@ -38,6 +38,16 @@ const PresidentialPrices: React.FC = () => {
   } | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const handleSendPrices = () => {
+    if (onSendPrices) {
+      const data = {
+        democratic: democraticPrices,
+        republican: republicanPrices,
+      };
+      onSendPrices(data);
+    }
+  };
 
   // Fetch the prices for both tokens on component mount
   useEffect(() => {
@@ -93,6 +103,12 @@ const PresidentialPrices: React.FC = () => {
           )}
         </div>
       )}
+      <button
+        onClick={handleSendPrices}
+        className="mt-4 p-2 bg-blue-500 text-white rounded"
+      >
+        Submit Prices to Nostr
+      </button>
     </div>
   );
 };

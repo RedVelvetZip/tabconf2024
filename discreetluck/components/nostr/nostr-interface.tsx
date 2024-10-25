@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getSharedSecret, getPublicKey, utils, schnorr } from "noble-secp256k1";
 
-const NostrInterface: React.FC = () => {
+const NostrInterface: React.FC<{ priceData: any }> = ({ priceData }) => {
   const [pubKey, setPubKey] = useState<string>("");
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<{ content: string; time: number }[]>(
@@ -48,7 +48,8 @@ const NostrInterface: React.FC = () => {
               "discreetluck_market",
               "which-party-will-win-the-2024-united-states-presidential-election",
             ], //hardcoded in the market for polymarket presential election
-            ["discreetluck_tx", "OfferCreate"],
+            ["discreetluck_tx", "OfferCreate"], // OfferCreate, OfferAccept, OfferCancel
+            ["discreetluck_tx_nullifier", "0"], // 0 is open, 1 is closed
           ],
           pubkey: pubKey,
         };
@@ -99,6 +100,28 @@ const NostrInterface: React.FC = () => {
 
     initialize();
   }, [privKey]);
+
+  useEffect(() => {
+    if (priceData && socket) {
+      const event = {
+        content:
+          `Democratic: BUY ${priceData.democratic?.buy}, SELL ${priceData.democratic?.sell}; ` +
+          `Republican: BUY ${priceData.republican?.buy}, SELL ${priceData.republican?.sell}`,
+        created_at: Math.floor(Date.now() / 1000),
+        kind: 1,
+        tags: [
+          ["p", pubKey],
+          ["market", "presidential-prices"],
+        ],
+        pubkey: pubKey,
+      };
+      const sendEventToNostr = async () => {
+        const signedEvent = await getSignedEvent(event, privKey);
+        socket.send(JSON.stringify(["EVENT", signedEvent]));
+      };
+      sendEventToNostr();
+    }
+  }, [priceData, socket]);
 
   // Function to display messages
   const handleDisplayMessages = () => {
