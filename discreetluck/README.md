@@ -1,7 +1,5 @@
 # Discreet Luck
 
-TODO
-
 tasks:
 
 - read basic tx from bitcoin node ✅
@@ -27,28 +25,25 @@ tasks:
    1b. interact with bitcoin-cli. eg generate a block
    `bitcoin-cli -regtest generatetoaddress 1 bcrt1qgjukxd3vjrz9qf0588mdj5j5w3fenyhl0g5y7j`
 
-2. (polygon) start a devnet polygon node
-   `cd polygon`
-   `npx hardhat node`
-   2b. (polygon) interface w node
-   `cd polygon`
-   `npx hardhat console --network localhost`
-
-3. (superrain) start a local nostr relay
+2. (superrain) start a local nostr relay
    `cd superrain`
    `npm start`
 
-4. (discreetluck) start the server to communicate with the regtest node
+3. (discreetluck) start the server to communicate with the regtest node
    `cd discreetluck`
    `node server.js`
 
-5. (discreetluck) start the frontend
+4. (discreetluck) start the frontend
    `cd discreetluck`
    `npm run dev`
 
-## Red's notes
-
-make sure to run with -txindex=1 and -reindex or else the tx api call wont work for pulling full tx info
+Optional
+5a. (polygon) start a devnet polygon node
+`cd polygon`
+`npx hardhat node`
+5b. (polygon) interface w node
+`cd polygon`
+`npx hardhat console --network localhost`
 
 ## regtest cmds
 
